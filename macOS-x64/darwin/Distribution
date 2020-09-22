@@ -4,6 +4,7 @@
     <background mime-type="image/png" file="banner.png" scaling="proportional"/>
     <welcome file="welcome.html" mime-type="text/html" />
     <conclusion file="conclusion.html" mime-type="text/html" />
+    <license file="LICENSE.txt"/>
     <options customize="never" allow-external-scripts="no"/>
     <domains enable_localSystem="true" />
     <installation-check script="installCheck();"/>
