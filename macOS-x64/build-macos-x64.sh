@@ -45,6 +45,7 @@ else
 fi
 
 #Parameters
+DESTDIR=/
 TARGET_DIRECTORY="target"
 PRODUCT=${1}
 VERSION=${2}
@@ -53,23 +54,51 @@ TIME=`date +%H:%M:%S`
 LOG_PREFIX="[$DATE $TIME]"
 
 #Functions
-go_to_dir() {
+function go_to_dir() {
     pushd $1 >/dev/null 2>&1
 }
 
-log_info() {
+function log_info() {
     echo "${LOG_PREFIX}[INFO]" $1
 }
 
-log_warn() {
+function log_warn() {
     echo "${LOG_PREFIX}[WARN]" $1
 }
 
-log_error() {
+function log_error() {
     echo "${LOG_PREFIX}[ERROR]" $1
 }
 
-deleteInstallationDirectory() {
+function rebuild_dirs() { 
+    for name in $@ ; do
+      echo rm -rf ${TARGET_DIRECTORY}${name}
+      echo mkdir -p ${TARGET_DIRECTORY}${name}
+    done
+}
+function update_perms() { 
+    for name in $@ ; do
+      echo chmod -R 755 ${TARGET_DIRECTORY}${name}
+    done
+}
+function update_perm() { 
+    for name in $@ ; do
+        echo chmod 755 ${TARGET_DIRECTORY}${name}
+    done
+}
+function replace_var() { 
+    echo sed -i '' -e "s/__${1}__/\${${1}}/g" ${TARGET_DIRECTORY}${2}
+}
+function update_vars() {
+    files=$@
+    for name in ${files}; do
+      for var in DESTDIR VERSION PRODUCT; do
+        replace_var ${var} ${name}
+      done
+    done
+}
+
+function deleteInstallationDirectory() {
     log_info "Cleaning $TARGET_DIRECTORY directory."
     rm -rf $TARGET_DIRECTORY
 
@@ -79,7 +108,7 @@ deleteInstallationDirectory() {
     fi
 }
 
-createInstallationDirectory() {
+function createInstallationDirectory() {
     if [ -d ${TARGET_DIRECTORY} ]; then
         deleteInstallationDirectory
     fi
@@ -91,42 +120,23 @@ createInstallationDirectory() {
     fi
 }
 
-copyDarwinDirectory(){
+function copyDarwinDirectory(){
   createInstallationDirectory
   cp -r darwin ${TARGET_DIRECTORY}/
-  chmod -R 755 ${TARGET_DIRECTORY}/darwin/scripts
-  chmod -R 755 ${TARGET_DIRECTORY}/darwin/Resources
-  chmod 755 ${TARGET_DIRECTORY}/darwin/Distribution
+  update_perms /darwin/scripts /darwin/Resources
+  update_perm /darwin/Distribution
 }
 
-copyBuildDirectory() {
-    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' ${TARGET_DIRECTORY}/darwin/scripts/postinstall
-    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' ${TARGET_DIRECTORY}/darwin/scripts/postinstall
-    chmod -R 755 ${TARGET_DIRECTORY}/darwin/scripts/postinstall
-
-    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' ${TARGET_DIRECTORY}/darwin/Distribution
-    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' ${TARGET_DIRECTORY}/darwin/Distribution
-    chmod -R 755 ${TARGET_DIRECTORY}/darwin/Distribution
-
-    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' ${TARGET_DIRECTORY}/darwin/Resources/*.html
-    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' ${TARGET_DIRECTORY}/darwin/Resources/*.html
-    chmod -R 755 ${TARGET_DIRECTORY}/darwin/Resources/
-
-    rm -rf ${TARGET_DIRECTORY}/darwinpkg
-    mkdir -p ${TARGET_DIRECTORY}/darwinpkg
+function copyBuildDirectory() {
+    update_vars /darwin/scripts/postinstall /darwin/Distribution /darwin/Resources/*.html
+    update_perms /darwin/scripts/postinstall /darwin/Distribution /darwin/Resources/
+    rebuild_dirs /darwinpkg /package /pkg
 
     #Copy cellery product to /Library/Cellery
     mkdir -p ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
     cp -a ./application/. ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
-    chmod -R 755 ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
+    update_perms /darwinpkg/Library/${PRODUCT}/${VERSION} /package /pkg
 
-    rm -rf ${TARGET_DIRECTORY}/package
-    mkdir -p ${TARGET_DIRECTORY}/package
-    chmod -R 755 ${TARGET_DIRECTORY}/package
-
-    rm -rf ${TARGET_DIRECTORY}/pkg
-    mkdir -p ${TARGET_DIRECTORY}/pkg
-    chmod -R 755 ${TARGET_DIRECTORY}/pkg
 }
 
 function buildPackage() {
