@@ -2,6 +2,7 @@
 <installer-script minSpecVersion="1.000000">
     <title>__PRODUCT__</title>
     <background mime-type="image/png" file="banner.png" scaling="proportional"/>
+    <background-darkAqua mime-type="image/png" file="banner.png" scaling="proportional"/>
     <welcome file="welcome.html" mime-type="text/html" />
     <conclusion file="conclusion.html" mime-type="text/html" />
     <license file="LICENSE.txt"/>
