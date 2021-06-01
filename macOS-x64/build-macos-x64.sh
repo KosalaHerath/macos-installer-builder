@@ -2,8 +2,17 @@
 
 #Configuration Variables and Parameters
 
+#Parameters
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+TARGET_DIRECTORY="$SCRIPTPATH/target"
+PRODUCT=${1}
+VERSION=${2}
+DATE=`date +%Y-%m-%d`
+TIME=`date +%H:%M:%S`
+LOG_PREFIX="[$DATE $TIME]"
+
 function printSignature() {
-  cat ./utils/ascii_art.txt
+  cat $SCRIPTPATH/utils/ascii_art.txt
   echo
 }
 
@@ -43,14 +52,6 @@ else
     printUsage
     exit 1
 fi
-
-#Parameters
-TARGET_DIRECTORY="target"
-PRODUCT=${1}
-VERSION=${2}
-DATE=`date +%Y-%m-%d`
-TIME=`date +%H:%M:%S`
-LOG_PREFIX="[$DATE $TIME]"
 
 #Functions
 go_to_dir() {
@@ -93,7 +94,7 @@ createInstallationDirectory() {
 
 copyDarwinDirectory(){
   createInstallationDirectory
-  cp -r darwin ${TARGET_DIRECTORY}/
+  cp -r $SCRIPTPATH/darwin ${TARGET_DIRECTORY}/
   chmod -R 755 ${TARGET_DIRECTORY}/darwin/scripts
   chmod -R 755 ${TARGET_DIRECTORY}/darwin/Resources
   chmod 755 ${TARGET_DIRECTORY}/darwin/Distribution
@@ -117,7 +118,7 @@ copyBuildDirectory() {
 
     #Copy cellery product to /Library/Cellery
     mkdir -p ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
-    cp -a ./application/. ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
+    cp -a $SCRIPTPATH/application/. ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
     chmod -R 755 ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
 
     rm -rf ${TARGET_DIRECTORY}/package
@@ -174,7 +175,7 @@ function createInstaller() {
 }
 
 function createUninstaller(){
-    cp darwin/Resources/uninstall.sh ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
+    cp $SCRIPTPATH/darwin/Resources/uninstall.sh ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
     sed -i '' -e "s/__VERSION__/${VERSION}/g" "${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}/uninstall.sh"
     sed -i '' -e "s/__PRODUCT__/${PRODUCT}/g" "${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}/uninstall.sh"
 }
