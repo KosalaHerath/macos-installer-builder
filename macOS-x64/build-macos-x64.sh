@@ -72,7 +72,7 @@ log_error() {
 
 deleteInstallationDirectory() {
     log_info "Cleaning $TARGET_DIRECTORY directory."
-    rm -rf $TARGET_DIRECTORY
+    rm -rf "$TARGET_DIRECTORY"
 
     if [[ $? != 0 ]]; then
         log_error "Failed to clean $TARGET_DIRECTORY directory" $?
@@ -81,10 +81,10 @@ deleteInstallationDirectory() {
 }
 
 createInstallationDirectory() {
-    if [ -d ${TARGET_DIRECTORY} ]; then
+    if [ -d "${TARGET_DIRECTORY}" ]; then
         deleteInstallationDirectory
     fi
-    mkdir $TARGET_DIRECTORY
+    mkdir -pv "$TARGET_DIRECTORY"
 
     if [[ $? != 0 ]]; then
         log_error "Failed to create $TARGET_DIRECTORY directory" $?
@@ -94,70 +94,70 @@ createInstallationDirectory() {
 
 copyDarwinDirectory(){
   createInstallationDirectory
-  cp -r $SCRIPTPATH/darwin ${TARGET_DIRECTORY}/
-  chmod -R 755 ${TARGET_DIRECTORY}/darwin/scripts
-  chmod -R 755 ${TARGET_DIRECTORY}/darwin/Resources
-  chmod 755 ${TARGET_DIRECTORY}/darwin/Distribution
+  cp -r "$SCRIPTPATH/darwin" "${TARGET_DIRECTORY}/"
+  chmod -R 755 "${TARGET_DIRECTORY}/darwin/scripts"
+  chmod -R 755 "${TARGET_DIRECTORY}/darwin/Resources"
+  chmod 755 "${TARGET_DIRECTORY}/darwin/Distribution"
 }
 
 copyBuildDirectory() {
-    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' ${TARGET_DIRECTORY}/darwin/scripts/postinstall
-    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' ${TARGET_DIRECTORY}/darwin/scripts/postinstall
-    chmod -R 755 ${TARGET_DIRECTORY}/darwin/scripts/postinstall
+    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}/darwin/scripts/postinstall"
+    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}/darwin/scripts/postinstall"
+    chmod -R 755 "${TARGET_DIRECTORY}/darwin/scripts/postinstall"
 
-    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' ${TARGET_DIRECTORY}/darwin/Distribution
-    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' ${TARGET_DIRECTORY}/darwin/Distribution
-    chmod -R 755 ${TARGET_DIRECTORY}/darwin/Distribution
+    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}/darwin/Distribution"
+    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}/darwin/Distribution"
+    chmod -R 755 "${TARGET_DIRECTORY}/darwin/Distribution"
 
-    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' ${TARGET_DIRECTORY}/darwin/Resources/*.html
-    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' ${TARGET_DIRECTORY}/darwin/Resources/*.html
-    chmod -R 755 ${TARGET_DIRECTORY}/darwin/Resources/
+    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}"/darwin/Resources/*.html
+    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}"/darwin/Resources/*.html
+    chmod -R 755 "${TARGET_DIRECTORY}/darwin/Resources/"
 
-    rm -rf ${TARGET_DIRECTORY}/darwinpkg
-    mkdir -p ${TARGET_DIRECTORY}/darwinpkg
+    rm -rf "${TARGET_DIRECTORY}/darwinpkg"
+    mkdir -p "${TARGET_DIRECTORY}/darwinpkg"
 
     #Copy cellery product to /Library/Cellery
-    mkdir -p ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
-    cp -a $SCRIPTPATH/application/. ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
-    chmod -R 755 ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
+    mkdir -p "${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}
+    cp -a "$SCRIPTPATH"/application/. "${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}
+    chmod -R 755 "${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}
 
-    rm -rf ${TARGET_DIRECTORY}/package
-    mkdir -p ${TARGET_DIRECTORY}/package
-    chmod -R 755 ${TARGET_DIRECTORY}/package
+    rm -rf "${TARGET_DIRECTORY}/package"
+    mkdir -p "${TARGET_DIRECTORY}/package"
+    chmod -R 755 "${TARGET_DIRECTORY}/package"
 
-    rm -rf ${TARGET_DIRECTORY}/pkg
-    mkdir -p ${TARGET_DIRECTORY}/pkg
-    chmod -R 755 ${TARGET_DIRECTORY}/pkg
+    rm -rf "${TARGET_DIRECTORY}/pkg"
+    mkdir -p "${TARGET_DIRECTORY}/pkg"
+    chmod -R 755 "${TARGET_DIRECTORY}/pkg"
 }
 
 function buildPackage() {
     log_info "Apllication installer package building started.(1/3)"
-    pkgbuild --identifier org.${PRODUCT}.${VERSION} \
-    --version ${VERSION} \
-    --scripts ${TARGET_DIRECTORY}/darwin/scripts \
-    --root ${TARGET_DIRECTORY}/darwinpkg \
-    ${TARGET_DIRECTORY}/package/${PRODUCT}.pkg > /dev/null 2>&1
+    pkgbuild --identifier "org.${PRODUCT}.${VERSION}" \
+    --version "${VERSION}" \
+    --scripts "${TARGET_DIRECTORY}/darwin/scripts" \
+    --root "${TARGET_DIRECTORY}/darwinpkg" \
+    "${TARGET_DIRECTORY}/package/${PRODUCT}.pkg" > /dev/null 2>&1
 }
 
 function buildProduct() {
     log_info "Application installer product building started.(2/3)"
-    productbuild --distribution ${TARGET_DIRECTORY}/darwin/Distribution \
-    --resources ${TARGET_DIRECTORY}/darwin/Resources \
-    --package-path ${TARGET_DIRECTORY}/package \
-    ${TARGET_DIRECTORY}/pkg/$1 > /dev/null 2>&1
+    productbuild --distribution "${TARGET_DIRECTORY}/darwin/Distribution" \
+    --resources "${TARGET_DIRECTORY}/darwin/Resources" \
+    --package-path "${TARGET_DIRECTORY}/package" \
+    "${TARGET_DIRECTORY}/pkg/$1" > /dev/null 2>&1
 }
 
 function signProduct() {
     log_info "Application installer signing process started.(3/3)"
-    mkdir -p ${TARGET_DIRECTORY}/pkg-signed
-    chmod -R 755 ${TARGET_DIRECTORY}/pkg-signed
+    mkdir -pv "${TARGET_DIRECTORY}/pkg-signed"
+    chmod -R 755 "${TARGET_DIRECTORY}/pkg-signed"
 
     read -p "Please enter the Apple Developer Installer Certificate ID:" APPLE_DEVELOPER_CERTIFICATE_ID
     productsign --sign "Developer ID Installer: ${APPLE_DEVELOPER_CERTIFICATE_ID}" \
-    ${TARGET_DIRECTORY}/pkg/$1 \
-    ${TARGET_DIRECTORY}/pkg-signed/$1
+    "${TARGET_DIRECTORY}/pkg/$1" \
+    "${TARGET_DIRECTORY}/pkg-signed/$1"
 
-    pkgutil --check-signature ${TARGET_DIRECTORY}/pkg-signed/$1
+    pkgutil --check-signature "${TARGET_DIRECTORY}/pkg-signed/$1"
 }
 
 function createInstaller() {
@@ -175,7 +175,7 @@ function createInstaller() {
 }
 
 function createUninstaller(){
-    cp $SCRIPTPATH/darwin/Resources/uninstall.sh ${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}
+    cp "$SCRIPTPATH/darwin/Resources/uninstall.sh" "${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}"
     sed -i '' -e "s/__VERSION__/${VERSION}/g" "${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}/uninstall.sh"
     sed -i '' -e "s/__PRODUCT__/${PRODUCT}/g" "${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}/uninstall.sh"
 }
