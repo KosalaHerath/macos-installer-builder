@@ -12,7 +12,7 @@ TIME=`date +%H:%M:%S`
 LOG_PREFIX="[$DATE $TIME]"
 
 function printSignature() {
-  cat $SCRIPTPATH/utils/ascii_art.txt
+  cat "$SCRIPTPATH/utils/ascii_art.txt"
   echo
 }
 
@@ -131,7 +131,7 @@ copyBuildDirectory() {
 }
 
 function buildPackage() {
-    log_info "Apllication installer package building started.(1/3)"
+    log_info "Application installer package building started.(1/3)"
     pkgbuild --identifier "org.${PRODUCT}.${VERSION}" \
     --version "${VERSION}" \
     --scripts "${TARGET_DIRECTORY}/darwin/scripts" \
