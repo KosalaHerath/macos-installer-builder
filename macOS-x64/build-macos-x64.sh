@@ -47,7 +47,7 @@ fi
 if [[ "$2" =~ [0-9]+.[0-9]+.[0-9]+ ]]; then
     echo "Application Version : $2"
 else
-    echo "Please enter a valid version for your application (fromat [0-9].[0-9].[0-9])"
+    echo "Please enter a valid version for your application (format [0-9].[0-9].[0-9])"
     echo
     printUsage
     exit 1
