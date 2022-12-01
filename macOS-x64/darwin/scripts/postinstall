@@ -1,23 +1,10 @@
 #!/bin/bash
 
-#install brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > logs
-
-#install colima, a docker replacment for mac
-brew install colima > logs
-
-if  [[ $arch == arm* ]]; then
-    sudo curl -L https://github.com/docker/compose/releases/download/v2.5.1/docker-compose-darwin-aarch64 -o /usr/local/bin/docker-compose > logs
-else
-    echo "not arm"
-fi
-
-
 #Custermize this for your application
-APPLICATION_FILE_PATH=bin/wso2server.sh
+APPLICATION_FILE_PATH=start-femr.sh
 
 #Parameters
-PRODUCT_HOME=/Library/__PRODUCT__/__VERSION__
+PRODUCT_HOME=/Library/femr
 
 echo "Post installation process started"
 

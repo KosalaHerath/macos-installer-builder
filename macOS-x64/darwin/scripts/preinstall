@@ -1,13 +1,22 @@
 #!/bin/bash
 
-#install brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > logs
+# download binary
+curl -LO https://github.com/abiosoft/colima/releases/download/v0.4.0/colima-$(uname)-$(uname -m)
 
-#install colima, a docker replacment for mac
-brew install colima > logs
+# install in $PATH
+install colima-$(uname)-$(uname -m) /usr/local/bin/colima # or sudo install if /usr/local/bin requires root.
+
+curl -fsSL "https://github.com/lima-vm/lima/releases/download/v0.13.0/lima-0.13.0-$(uname -s)-$(uname -m).tar.gz" | tar Cxzvm /usr/local
+
+# git clone https://gitlab.com/qemu-project/qemu.git
+# cd qemu
+# git submodule init
+# git submodule update --recursive
+# ./configure
+# make
 
 if  [[ $arch == arm* ]]; then
-    sudo curl -L https://github.com/docker/compose/releases/download/v2.5.1/docker-compose-darwin-aarch64 -o /usr/local/bin/docker-compose > logs
+    sudo curl -L https://github.com/docker/compose/releases/download/v2.5.1/docker-compose-darwin-aarch64 -o /usr/local/bin/docker-compose > /tmp/test.log
 else
     echo "not arm"
 fi

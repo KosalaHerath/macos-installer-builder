@@ -136,6 +136,7 @@ copyBuildDirectory() {
 
 function buildPackage() {
     log_info "Application installer package building started.(1/3)"
+    echo "here"
     pkgbuild --identifier "org.${PRODUCT}.${VERSION}" \
     --version "${VERSION}" \
     --scripts "${TARGET_DIRECTORY}/darwin/scripts" \

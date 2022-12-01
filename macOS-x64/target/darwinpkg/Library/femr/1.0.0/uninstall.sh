@@ -28,7 +28,7 @@ fi
 
 echo "Welcome to Application Uninstaller"
 echo "The following packages will be REMOVED:"
-echo "  femr-1.0.9"
+echo "  femr-1.0.0"
 while true; do
     read -p "Do you wish to continue [Y/n]?" answer
     [[ $answer == "y" || $answer == "Y" || $answer == "" ]] && break
@@ -38,12 +38,12 @@ done
 
 
 #Need to replace these with install preparation script
-VERSION=1.0.9
+VERSION=1.0.0
 PRODUCT=femr
 
 echo "Application uninstalling process started"
 # remove link to shorcut file
-find "/usr/local/bin/" -name "femr-1.0.9" | xargs rm
+find "/usr/local/bin/" -name "femr-1.0.0" | xargs rm
 if [ $? -eq 0 ]
 then
   echo "[1/3] [DONE] Successfully deleted shortcut links"
