@@ -1,13 +1,18 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
 # macOS Installer Builder
-Generate macOS installers for your applications and products from one command.
 
-For more detailed process please refer medium blog about the macOS installer builder: https://medium.com/swlh/the-easiest-way-to-build-macos-installer-for-your-application-34a11dd08744
-<p align="center"> 
-  <img src="https://cdn.dribbble.com/users/1161517/screenshots/7896076/apple-logo-animation.gif" width="600" height="450" />
-</p>
+Creates a macOS installer for the fEMR application.
 
-Please suggest any modifications that will improve these implementations by reporting an issue. Happy to help you!
+Acknowledgements: https://medium.com/swlh/the-easiest-way-to-build-macos-installer-for-your-application-34a11dd08744
 
-Cheers!! 🍺
+## File Structure
+
+- `application` contains the files that will be installed on the user's machine upon running the installer.
+- `darwin/Resources` contains resources used by the installer, such as the banner image, html pages, and other required texts. 
+- `darwin/scripts` contains the preinstall and postinstall scripts that are used to install necessary dependencies when the installer runs. 
+
+## Creating the Installer
+To compile the files into a .pkg installer:
+```
+./macOS-x64/build-macos-x64.sh [APPLICATION_NAME] [APPLICATION_VERSION]
+```
+This will create the .pkg installer under the `/macOS-x64/target/pkg` directory. The installer can now be double clicked inside Finder and the installer will run through the necessary steps to install the fEMR software. 
