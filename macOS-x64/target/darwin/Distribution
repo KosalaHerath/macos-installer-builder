@@ -17,9 +17,9 @@ function installCheck() {
         my.result.type = 'Fatal';
         return false;
     }
-    if(system.files.fileExistsAtPath('/Library/femr/1.0.0/')) {
+    if(system.files.fileExistsAtPath('/Library/femr/1.0.1/')) {
         my.result.title = 'Previous Installation Detected';
-        my.result.message = 'A previous installation of femr exists at /Library/femr/1.0.0/. This installer will remove the previous installation prior to installing. Please back up any data before proceeding.';
+        my.result.message = 'A previous installation of femr exists at /Library/femr/1.0.1/. This installer will remove the previous installation prior to installing. Please back up any data before proceeding.';
         my.result.type = 'Warning';
         return false;
     }

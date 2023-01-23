@@ -15,6 +15,6 @@ chmod -R 755 .
 [ -d /usr/local/bin ] || mkdir /usr/local/bin
 
 #Add application shortcut to /usr/local/bin
-rm -f /usr/local/bin/femr-1.0.0
-ln -s ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /usr/local/bin/femr-1.0.0
+rm -f /usr/local/bin/femr-1.0.1
+ln -s ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /usr/local/bin/femr-1.0.1
 echo "Post installation process finished"
