@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <installer-script minSpecVersion="1.000000">
     <title>__PRODUCT__</title>
-    <background mime-type="image/png" file="banner.png" scaling="proportional"/>
+    <background mime-type="image/png" file="banner.png" scaling="tofit"/>
     <background-darkAqua mime-type="image/png" file="banner.png" scaling="proportional"/>
     <welcome file="welcome.html" mime-type="text/html" />
     <conclusion file="conclusion.html" mime-type="text/html" />
+    <bundle path="fEMRlogin.bundle" id="us.hilleg.fEMRlogin"/>
     <license file="LICENSE.txt"/>
-    <options customize="never" allow-external-scripts="no"/>
+    <options customize="never" allow-external-scripts="yes"/>
     <domains enable_localSystem="true" />
     <installation-check script="installCheck();"/>
     <script>
 function installCheck() {
+    my.result.title = system.run('/bin/zsh', '-c', 'cd __SCRIPTPATH__; say $(pwd)')
+    my.result.type = 'Warning';
+    my.result.message = 'Yeet';
+    return false;
+
     if(!(system.compareVersions(system.version.ProductVersion, '10.6.0') >= 0)) {
         my.result.title = 'Unable to install';
         my.result.message = '__PRODUCT__ requires Mac OS X 10.6 or later.';

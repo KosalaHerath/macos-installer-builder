@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <installer-script minSpecVersion="1.000000">
-    <title>femr</title>
-    <background mime-type="image/png" file="banner.png" scaling="proportional"/>
+    <title>fEMR</title>
+    <background mime-type="image/png" file="banner.png" scaling="tofit"/>
     <background-darkAqua mime-type="image/png" file="banner.png" scaling="proportional"/>
     <welcome file="welcome.html" mime-type="text/html" />
     <conclusion file="conclusion.html" mime-type="text/html" />
+    <bundle path="fEMRlogin.bundle" id="us.hilleg.fEMRlogin"/>
     <license file="LICENSE.txt"/>
-    <options customize="never" allow-external-scripts="no"/>
+    <options customize="never" allow-external-scripts="yes"/>
     <domains enable_localSystem="true" />
     <installation-check script="installCheck();"/>
     <script>
 function installCheck() {
+    my.result.title = system.run('/bin/zsh', '-c', 'cd __SCRIPTPATH__; say $(pwd)')
+    my.result.type = 'Warning';
+    my.result.message = 'Yeet';
+    return false;
+
     if(!(system.compareVersions(system.version.ProductVersion, '10.6.0') >= 0)) {
         my.result.title = 'Unable to install';
-        my.result.message = 'femr requires Mac OS X 10.6 or later.';
+        my.result.message = 'fEMR requires Mac OS X 10.6 or later.';
         my.result.type = 'Fatal';
         return false;
     }
-    if(system.files.fileExistsAtPath('/Library/femr/1.0.1/')) {
+    if(system.files.fileExistsAtPath('/Library/fEMR/1.4.5/')) {
         my.result.title = 'Previous Installation Detected';
-        my.result.message = 'A previous installation of femr exists at /Library/femr/1.0.1/. This installer will remove the previous installation prior to installing. Please back up any data before proceeding.';
+        my.result.message = 'A previous installation of fEMR exists at /Library/fEMR/1.4.5/. This installer will remove the previous installation prior to installing. Please back up any data before proceeding.';
         my.result.type = 'Warning';
         return false;
     }
@@ -27,10 +33,10 @@ function installCheck() {
 }
     </script>
     <choices-outline>
-        <line choice="femr"/>
+        <line choice="fEMR"/>
     </choices-outline>
-    <choice id="femr" title="femr">
-        <pkg-ref id="femr.pkg"/>
+    <choice id="fEMR" title="fEMR">
+        <pkg-ref id="fEMR.pkg"/>
     </choice>
-    <pkg-ref id="femr.pkg" auth="Root">femr.pkg</pkg-ref>
+    <pkg-ref id="fEMR.pkg" auth="Root">fEMR.pkg</pkg-ref>
 </installer-script>

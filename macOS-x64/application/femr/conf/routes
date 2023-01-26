@@ -1,0 +1,109 @@
+
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+GET         /*path/                                            femr.ui.controllers.ApplicationController.removeTrailingSlash(path: String)
+GET         /superuser/tabs/:name                              @femr.ui.controllers.superuser.TabController.fieldsGet(name: String)
+POST        /superuser/tabs/:name                              @femr.ui.controllers.superuser.TabController.fieldsPost(name: String)
+GET         /superuser/tabs                                    @femr.ui.controllers.superuser.TabController.manageGet()
+POST        /superuser/tabs                                    @femr.ui.controllers.superuser.TabController.managePost()
+GET         /superuser                                         @femr.ui.controllers.superuser.SuperuserController.indexGet()
+#Admin
+POST        /admin/users/create                                @femr.ui.controllers.admin.UsersController.createPost()
+GET         /admin/users/create                                @femr.ui.controllers.admin.UsersController.createGet()
+POST        /admin/users/edit                                  @femr.ui.controllers.admin.UsersController.editPost(id: Integer)
+GET         /admin/users/edit/:id                              @femr.ui.controllers.admin.UsersController.editGet(id: Integer)
+POST        /admin/users/toggle/:id                            @femr.ui.controllers.admin.UsersController.toggleUser(id: Integer)
+GET         /admin/users                                       @femr.ui.controllers.admin.UsersController.manageGet()
+GET         /admin/inventory/:tripId                           @femr.ui.controllers.admin.InventoryController.manageGet(tripId: Integer)
+POST        /admin/inventory                                   @femr.ui.controllers.admin.InventoryController.managePost()
+GET         /admin/inventory/custom/:tripId                    @femr.ui.controllers.admin.InventoryController.customGet(tripId: Integer)
+POST        /admin/inventory/custom/:tripId                    @femr.ui.controllers.admin.InventoryController.customPost(tripId: Integer)
+GET         /admin/inventory/existing/:tripId                  @femr.ui.controllers.admin.InventoryController.existingGet(tripId: Integer)
+POST        /admin/inventory/existing/:tripId                  @femr.ui.controllers.admin.InventoryController.existingPost(tripId: Integer)
+GET         /admin/inventory/export/:tripId                    @femr.ui.controllers.admin.InventoryController.exportGet(tripId: Integer)
+POST        /admin/inventory/delete/:id/:tripId                @femr.ui.controllers.admin.InventoryController.ajaxDelete(id: Integer, tripId: Integer)
+POST        /admin/inventory/readd/:id/:tripId                 @femr.ui.controllers.admin.InventoryController.ajaxReadd(id: Integer, tripId: Integer)
+POST        /admin/inventory/editCurrent/:id/:tripId           @femr.ui.controllers.admin.InventoryController.ajaxEditCurrent(id: Integer, tripId: Integer)
+POST        /admin/inventory/editTotal/:id/:tripId             @femr.ui.controllers.admin.InventoryController.ajaxEditTotal(id: Integer, tripId: Integer)
+GET         /admin/configure                                   @femr.ui.controllers.admin.ConfigureController.manageGet()
+POST        /admin/configure                                   @femr.ui.controllers.admin.ConfigureController.managePost()
+GET         /admin/updates                                     @femr.ui.controllers.admin.UpdatesController.manageGet()
+POST        /admin/updates/database                            @femr.ui.controllers.admin.UpdatesController.databasePost()
+POST        /admin/updates/kit                                 @femr.ui.controllers.admin.UpdatesController.kitUpdatePost()
+GET         /admin/updates/internet                            @femr.ui.controllers.admin.UpdatesController.refreshInternetStatus()
+GET         /admin/trips                                       @femr.ui.controllers.admin.TripController.manageGet()
+POST        /admin/trips                                       @femr.ui.controllers.admin.TripController.managePost()
+GET         /admin/trips/edit/:id                              @femr.ui.controllers.admin.TripController.editGet(id: Integer)
+POST        /admin/trips/edit/:id                              @femr.ui.controllers.admin.TripController.editPost(id: Integer)
+GET         /admin/trips/teams                                 @femr.ui.controllers.admin.TripController.teamsGet()
+POST        /admin/trips/teams                                 @femr.ui.controllers.admin.TripController.teamsPost()
+GET         /admin/trips/cities                                @femr.ui.controllers.admin.TripController.citiesGet()
+POST        /admin/trips/cities                                @femr.ui.controllers.admin.TripController.citiesPost()
+POST        /admin/updateDb                                    @femr.ui.controllers.admin.DatabaseController.downloadPost()
+GET         /admin                                             @femr.ui.controllers.admin.AdminController.index()
+#Manager
+GET         /manager                                           @femr.ui.controllers.manager.ManagerController.indexGet()
+#Pharmacy
+GET         /pharmacy/edit/:id                                 @femr.ui.controllers.PharmaciesController.editGet(id: Integer)
+POST        /pharmacy/edit/:id                                 @femr.ui.controllers.PharmaciesController.editPost(id: Integer)
+GET         /pharmacy                                          @femr.ui.controllers.PharmaciesController.indexGet()
+POST        /pharmacy                                          @femr.ui.controllers.PharmaciesController.indexPost()
+#History
+GET         /history/encounter/:id                             @femr.ui.controllers.HistoryController.indexEncounterGet(id: Integer)
+POST        /history/encounter/updateField/:id                 @femr.ui.controllers.HistoryController.updateEncounterPost(id: Integer)
+GET         /history/encounter/listTabFieldHistory/:id         @femr.ui.controllers.HistoryController.listTabFieldHistoryGet(id: Integer)
+POST        /history/encounter/delete/:id                      @femr.ui.controllers.TriageController.deleteEncounterPost(id: Integer,encounterId: Integer)
+GET         /history/patient/:query                            @femr.ui.controllers.HistoryController.indexPatientGet(query: String)
+
+GET         /history/patient/withMatches/p                     @femr.ui.controllers.HistoryController.indexPatientGetWithRankedMatches(first: String, last: String, phone: String ?= null, addr: String ?= null, age: java.lang.Long ?= null, gender: String, city: String)
+#Search
+GET         /search/:page                                      @femr.ui.controllers.SearchController.handleSearch(page: String)
+GET         /search/check/:query                               @femr.ui.controllers.SearchController.doesPatientExist(query: String)
+GET         /search/dupPatient/findMatch         @femr.ui.controllers.SearchController.doesPatientExistForSearch(first: String, last: String, phone: String ?= null, addr: String ?= null, age: java.lang.Long ?= null, gender: String, city: String)
+GET         /search/typeahead/patients                         @femr.ui.controllers.SearchController.typeaheadPatientsJSONGet()
+# AJ Saclayan!  Adding in typeahead
+GET         /search/typeahead/cities                           @femr.ui.controllers.SearchController.typeaheadCitiesJSONGet()
+GET         /search/typeahead/diagnoses                        @femr.ui.controllers.SearchController.typeaheadDiagnosisJSONGet()
+GET         /search/typeahead/medicationsWithID                @femr.ui.controllers.SearchController.typeaheadMedicationsWithIDJSONGet()
+GET         /search/typeahead/medicationAdministrations        @femr.ui.controllers.SearchController.typeaheadMedicationAdministrationsJSONGet()
+#Photo
+GET         /photo/patient/:id                                 @femr.ui.controllers.PhotoController.GetPatientPhoto(id: Integer, showDefault: Boolean ?= false)
+GET         /photo/encounter/:id                               @femr.ui.controllers.PhotoController.GetPhoto(id: Int)
+#Triage
+GET         /triage/:id                                        @femr.ui.controllers.TriageController.indexPopulatedGet(id: Integer)
+GET         /triage                                            @femr.ui.controllers.TriageController.indexGet()
+POST        /triage                                            @femr.ui.controllers.TriageController.indexPost(id: Integer)
+POST        /triage/:id                                        @femr.ui.controllers.TriageController.deletePatientPost(id: Integer)
+#Medical
+POST        /medical/updateVitals/:id                          @femr.ui.controllers.MedicalController.updateVitalsPost(id: Integer)
+GET         /medical/newVitals                                 @femr.ui.controllers.MedicalController.newVitalsGet()
+GET         /medical/listVitals/:id                            @femr.ui.controllers.MedicalController.listVitalsGet(id: Integer)
+GET         /medical/edit/:id                                  @femr.ui.controllers.MedicalController.editGet(id: Integer)
+POST        /medical/edit/:id                                  @femr.ui.controllers.MedicalController.editPost(id: Integer)
+GET         /medical                                           @femr.ui.controllers.MedicalController.indexGet()
+POST        /medical                                           @femr.ui.controllers.MedicalController.indexPost()
+GET         /medical/prescriptionRow/:index                    @femr.ui.controllers.MedicalController.prescriptionRowGet( index: Integer )
+POST        /medical/deleteProblem/:patientId/:problem         @femr.ui.controllers.MedicalController.deleteExistingProblem(patientId: Integer, problem: String)
+#Research
+GET         /research                                          @femr.ui.controllers.ResearchController.indexGet()
+POST        /research                                          @femr.ui.controllers.ResearchController.indexPost()
+POST        /research/exportData                               @femr.ui.controllers.ResearchController.exportPost()
+#Pdf
+GET         /pdf/encounter/:encounterId                        @femr.ui.controllers.PDFController.index(encounterId : Integer)
+#Sessions
+GET         /logout                                            @femr.ui.controllers.SessionsController.delete()
+POST        /login/reset                                       @femr.ui.controllers.SessionsController.editPasswordPost()
+POST        /login                                             @femr.ui.controllers.SessionsController.createPost()
+GET         /login                                             @femr.ui.controllers.SessionsController.createGet()
+#Reference
+GET         /reference                                         @femr.ui.controllers.ReferenceController.indexGet()
+#Home
+GET         /                                                  @femr.ui.controllers.HomeController.index()
+
+# Map static resources without global state
+GET         /assets/*file                                       controllers.Assets.versioned(file)
+
+#Feedback
+GET         /feedback                                           @femr.ui.controllers.FeedbackController.indexGet()
+POST        /feedback                                           @femr.ui.controllers.FeedbackController.indexPost()

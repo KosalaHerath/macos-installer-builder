@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #Custermize this for your application
-APPLICATION_FILE_PATH=start-femr.sh
+APPLICATION_FILE_PATH=start-femr
 
 #Parameters
-PRODUCT_HOME=/Library/femr
+PRODUCT_HOME=/Library/__PRODUCT__/__VERSION__
 
 echo "Post installation process started"
 
@@ -16,5 +16,5 @@ chmod -R 755 .
 
 #Add application shortcut to /usr/local/bin
 rm -f /usr/local/bin/__PRODUCT__-__VERSION__
-ln -s ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /usr/local/bin/__PRODUCT__-__VERSION__
+cp -R ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /Applications/fEMR
 echo "Post installation process finished"
