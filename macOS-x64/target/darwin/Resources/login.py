@@ -3,22 +3,30 @@
 import PySimpleGUI as sg
 
 def verify_password(user, password):
-    return True
+    if (user == "admin" and password == "admin"):
+        return True
+    else:
+        print("incorrect login")
 
-print("I'm alive")
 layout = [  [sg.Text('Username'), sg.Input(key='-USERNAME-')],
             [sg.Text('Password'), sg.Input(key='-PASSWORD-')],
-            [sg.Ok(), sg.Cancel()]]
+            [sg.Button('Ok', key='-OK-'), sg.Cancel()],
+            [sg.Button('Submit', visible=False, bind_return_key=True)]
+        ]
 
 window = sg.Window('fEMR Login', layout)
 
 while True:
     event, values = window.read()
+
     if event == sg.WIN_CLOSED or event == 'Cancel':
         break
+    elif event == 'Submit' or event == '-OK-':
+        user = window['-USERNAME-'].get()
+        password = window['-PASSWORD-'].get()
+        print(user)
+        print(password)
+        if (verify_password(user, password)):
+            break
 
-user = window["-USERNAME-"]
-password =  window["-PASSWORD-"]
-
-verfiy_password(user, password)
 window.close()

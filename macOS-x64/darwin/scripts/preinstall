@@ -1,19 +1,7 @@
 #!/bin/bash
 
-# download binary
-curl -LO https://github.com/abiosoft/colima/releases/download/v0.4.0/colima-$(uname)-$(uname -m)
-
-# install in $PATH
-install colima-$(uname)-$(uname -m) /usr/local/bin/colima # or sudo install if /usr/local/bin requires root.
-
-curl -fsSL "https://github.com/lima-vm/lima/releases/download/v0.13.0/lima-0.13.0-$(uname -s)-$(uname -m).tar.gz" | tar Cxzvm /usr/local
-
-# git clone https://gitlab.com/qemu-project/qemu.git
-# cd qemu
-# git submodule init
-# git submodule update --recursive
-# ./configure
-# make
+# find ../../../ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+./login
 
 if  [[ $arch == arm* ]]; then
     echo "arm"
