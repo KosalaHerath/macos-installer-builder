@@ -18,3 +18,9 @@ chmod -R 755 .
 rm -f /usr/local/bin/__PRODUCT__-__VERSION__
 cp -R ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /Applications/fEMR
 echo "Post installation process finished"
+
+#mv to /var
+rm -rf /var/__PRODUCT__/
+mv -f $PRODUCT_HOME /var/__PRODUCT__/
+
+

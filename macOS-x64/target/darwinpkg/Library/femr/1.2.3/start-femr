@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Starting fEMR"
-cd /Library/femr/1.4.5
+cd /var/femr
 open /Applications/Docker.app
 sleep 15
 docker-compose up

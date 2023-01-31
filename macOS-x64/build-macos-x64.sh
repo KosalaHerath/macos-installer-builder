@@ -113,6 +113,13 @@ copyBuildDirectory() {
     sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}/darwin/Distribution"
     sed -i '' -e 's/__SCRIPTPATH__/'${SCRIPTPATH}'/g' "${TARGET_DIRECTORY}/darwin/Distribution"
 
+    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}/darwin/scripts/preinstall"
+    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}/darwin/scripts/preinstall"
+    chmod -R 755 "${TARGET_DIRECTORY}/darwin/scripts/preinstall"
+
+    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}/darwinpkg/start-femr"
+    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}/darwinpkg/start-femr"
+
     chmod -R 755 "${TARGET_DIRECTORY}/darwin/Distribution"
 
     sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}"/darwin/Resources/*.html

@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['/Users/walden/code/macos-installer-builder-femr/macOS-x64/darwin/Resources/login.py'],
+    ['login.py'],
     pathex=[],
     binaries=[],
     datas=[],
