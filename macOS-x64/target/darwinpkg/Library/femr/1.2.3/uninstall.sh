@@ -28,7 +28,11 @@ fi
 
 echo "Welcome to Application Uninstaller"
 echo "The following packages will be REMOVED:"
+<<<<<<<< HEAD:macOS-x64/target/darwinpkg/Library/femr/1.2.3/uninstall.sh
 echo "  femr-1.2.3"
+========
+echo "  femr-1.0.0"
+>>>>>>>> 2f598ac6a8bea1cdd6deff521da650ce2ebc1031:macOS-x64/target/darwinpkg/Library/femr/1.0.0/uninstall.sh
 while true; do
     read -p "Do you wish to continue [Y/n]?" answer
     [[ $answer == "y" || $answer == "Y" || $answer == "" ]] && break
@@ -38,12 +42,20 @@ done
 
 
 #Need to replace these with install preparation script
+<<<<<<<< HEAD:macOS-x64/target/darwinpkg/Library/femr/1.2.3/uninstall.sh
 VERSION=1.2.3
+========
+VERSION=1.0.0
+>>>>>>>> 2f598ac6a8bea1cdd6deff521da650ce2ebc1031:macOS-x64/target/darwinpkg/Library/femr/1.0.0/uninstall.sh
 PRODUCT=femr
 
 echo "Application uninstalling process started"
 # remove link to shorcut file
+<<<<<<<< HEAD:macOS-x64/target/darwinpkg/Library/femr/1.2.3/uninstall.sh
 find "/usr/local/bin/" -name "femr-1.2.3" | xargs rm
+========
+find "/usr/local/bin/" -name "femr-1.0.0" | xargs rm
+>>>>>>>> 2f598ac6a8bea1cdd6deff521da650ce2ebc1031:macOS-x64/target/darwinpkg/Library/femr/1.0.0/uninstall.sh
 if [ $? -eq 0 ]
 then
   echo "[1/3] [DONE] Successfully deleted shortcut links"

@@ -4,7 +4,11 @@
 APPLICATION_FILE_PATH=start-femr
 
 #Parameters
+<<<<<<< HEAD
 PRODUCT_HOME=/Library/femr/1.2.3
+=======
+PRODUCT_HOME=/Library/femr/1.0.0
+>>>>>>> 2f598ac6a8bea1cdd6deff521da650ce2ebc1031
 
 echo "Post installation process started"
 
@@ -15,7 +19,11 @@ chmod -R 755 .
 [ -d /usr/local/bin ] || mkdir /usr/local/bin
 
 #Add application shortcut to /usr/local/bin
+<<<<<<< HEAD
 rm -f /usr/local/bin/femr-1.2.3
+=======
+rm -f /usr/local/bin/femr-1.0.0
+>>>>>>> 2f598ac6a8bea1cdd6deff521da650ce2ebc1031
 cp -R ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /Applications/fEMR
 echo "Post installation process finished"
 
