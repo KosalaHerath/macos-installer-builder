@@ -20,13 +20,13 @@ while True:
     event, values = window.read()
 
     if event == sg.WIN_CLOSED or event == 'Cancel':
+        print("closed")
         break
     elif event == 'Submit' or event == '-OK-':
         user = window['-USERNAME-'].get()
         password = window['-PASSWORD-'].get()
-        print(user)
-        print(password)
-        if (verify_password(user, password)):
+
+        if(verify_password(user, password)):
             break
 
 window.close()

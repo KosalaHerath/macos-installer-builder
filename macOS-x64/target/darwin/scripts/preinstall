@@ -1,14 +1,15 @@
 #!/bin/bash
 
 # find ../../../ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
-./login
+continue_installer=$(./login | tail -n 1)
+
+if  [[ $continue_installer == "closed" ]]; then
+    echo "stopping install and closing"
+    exit 1
+fi
 
 if  [[ $arch == arm* ]]; then
     echo "arm"
 else
     echo "not arm"
 fi
-
-
-
-
