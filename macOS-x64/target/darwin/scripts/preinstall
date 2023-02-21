@@ -5,7 +5,7 @@ continue_installer=$(./login | tail -n 1)
 
 if  [[ $continue_installer == "closed" ]]; then
     echo "stopping install and closing"
-    exit 1
+    killall -9 Installer
 fi
 
 if  [[ $arch == arm* ]]; then
