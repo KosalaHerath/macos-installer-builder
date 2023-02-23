@@ -16,11 +16,22 @@ chmod -R 755 .
 
 #Add application shortcut to /usr/local/bin
 rm -f /usr/local/bin/__PRODUCT__-__VERSION__
+
+rm -f /Applications/fEMR
 cp -R ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /Applications/fEMR
-echo "Post installation process finished"
 
 #mv to /var
 rm -rf /var/__PRODUCT__/
 mv -f $PRODUCT_HOME /var/__PRODUCT__/
+
+#Load docker images
+cd /var/__PRODUCT__/
+/usr/local/bin/docker load -i femr.tar
+/usr/local/bin/docker load -i mysql:5.7.tar
+
+echo "Post installation process finished"
+
+
+
 
 

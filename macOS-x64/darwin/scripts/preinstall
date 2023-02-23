@@ -1,6 +1,8 @@
 #!/bin/bash
 
+
 # find ../../../ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+open -g -j -a Docker.app
 ./login
 
 if  [[ $arch == arm* ]]; then
@@ -8,7 +10,4 @@ if  [[ $arch == arm* ]]; then
 else
     echo "not arm"
 fi
-
-
-
 
