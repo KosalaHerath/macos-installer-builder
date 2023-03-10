@@ -14,7 +14,7 @@ def main():
     args = parser.parse_args()
 
     # build the mac installer
-    subprocess.run(['./macOs-x64/build-macos-x64.sh', 'femr', args.version], input=b'N')
+    subprocess.run(['./macOs-x64/build-macos-x64.sh', 'femr', args.version], input=b'N', check=True)
 
     s3 = boto3.client('s3')
 
