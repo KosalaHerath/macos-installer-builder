@@ -1,0 +1,39 @@
+version: "3"
+services:
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'femr_db'
+      MYSQL_USER: 'femr'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db-data:/var/lib/mysql
+      
+  femr:
+    image: spencerklawans/femr:latest
+    links: 
+      - db:mysql
+    depends_on: 
+      - db
+    tty: true
+    ports:
+      - '127.0.0.1:8080:9000'
+    expose:
+      - '9000'
+    volumes:
+      - ./femr/conf:/home/femrapp/conf
+    environment:
+      DB_URL: 'jdbc:mysql://db:3306/femr_db?characterEncoding=UTF-8&useSSL=false'
+      DB_USER: 'root'
+      DB_PASS: 'password'
+
+
+volumes:
+  db-data:
