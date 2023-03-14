@@ -1,6 +1,8 @@
 #!/bin/bash
 
+
 # find ../../../ -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+open -g -j -a Docker.app
 continue_installer=$(./login | tail -n 1)
 
 if  [[ $continue_installer == "closed" ]]; then

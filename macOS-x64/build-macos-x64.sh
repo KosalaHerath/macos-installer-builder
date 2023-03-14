@@ -10,6 +10,8 @@ VERSION=${2}
 DATE=`date +%Y-%m-%d`
 TIME=`date +%H:%M:%S`
 LOG_PREFIX="[$DATE $TIME]"
+SQL_CONTAINER="mysql:5.7"
+FEMR_CONTAINER="waldenhillegass/super-femr:notarm"
 
 function printSignature() {
   cat "$SCRIPTPATH/utils/ascii_art.txt"
@@ -92,6 +94,15 @@ createInstallationDirectory() {
     fi
 }
 
+pull_and_save_docker_images() {
+    log_info "Pulling docker images... If this fails, make sure Docker is running."
+    docker pull $SQL_CONTAINER
+    docker pull $FEMR_CONTAINER
+    log_info "Saving docker images.."
+    docker save $SQL_CONTAINER > ${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}/mysql:5.7.tar"
+    docker save $FEMR_CONTAINER > ${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}/femr.tar"
+}
+
 copyDarwinDirectory(){
   createInstallationDirectory
   cp -r "$SCRIPTPATH/darwin" "${TARGET_DIRECTORY}/"
@@ -112,6 +123,10 @@ copyBuildDirectory() {
     sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}/darwin/Distribution"
     sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}/darwin/Distribution"
     sed -i '' -e 's/__SCRIPTPATH__/'${SCRIPTPATH}'/g' "${TARGET_DIRECTORY}/darwin/Distribution"
+
+    sed -i '' -e 's/__VERSION__/'${VERSION}'/g' "${TARGET_DIRECTORY}/darwin/scripts/preinstall"
+    sed -i '' -e 's/__PRODUCT__/'${PRODUCT}'/g' "${TARGET_DIRECTORY}/darwin/scripts/preinstall"
+    chmod -R 755 "${TARGET_DIRECTORY}/darwin/scripts/preinstall"
 
     chmod -R 755 "${TARGET_DIRECTORY}/darwin/Distribution"
 
@@ -202,6 +217,7 @@ log_info "Installer generating process started."
 
 copyDarwinDirectory
 copyBuildDirectory
+pull_and_save_docker_images
 createUninstaller
 createInstaller
 

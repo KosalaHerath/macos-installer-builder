@@ -18,7 +18,7 @@ services:
 
   femr:
     platform: linux/arm64/v8
-    image: waldenhillegass/super-femr:latest
+    image: waldenhillegass/super-femr:notarm
     links:
       - db:mysql
     depends_on:
