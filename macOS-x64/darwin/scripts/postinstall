@@ -24,6 +24,12 @@ cp -R ${PRODUCT_HOME}/${APPLICATION_FILE_PATH} /Applications/fEMR
 rm -rf /var/__PRODUCT__/
 mv -f $PRODUCT_HOME /var/__PRODUCT__/
 
+#set database passwords
+PASSWORD=$(cat /dev/urandom | env LC_ALL=C tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+sed -i '' -e 's/__PASSWORD__/'${PASSWORD}'/g' /var/femr/femr/conf/*.conf
+
+
 #Load docker images
 cd /var/__PRODUCT__/
 /usr/local/bin/docker load -i femr.tar
