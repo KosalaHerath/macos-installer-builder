@@ -1,18 +1,15 @@
-# macOS Installer Builder
+# fEMR Installers
 
-Creates a macOS installer for the fEMR application.
-
-Acknowledgements: https://medium.com/swlh/the-easiest-way-to-build-macos-installer-for-your-application-34a11dd08744
+Creates installers for the fEMR application for Mac and Windows systems.
 
 ## File Structure
 
-- `application` contains the files that will be installed on the user's machine upon running the installer.
-- `darwin/Resources` contains resources used by the installer, such as the banner image, html pages, and other required texts. 
-- `darwin/scripts` contains the preinstall and postinstall scripts that are used to install necessary dependencies when the installer runs. 
+- `macOS-x64` contains the files for creating the Mac installer.
+- `windowsInstaller` contains files for creating the Windows installer.
+- `release.py` 
 
-## Creating the Installer
-To compile the files into a .pkg installer:
-```
-./macOS-x64/build-macos-x64.sh [APPLICATION_NAME] [APPLICATION_VERSION]
-```
-This will create the .pkg installer under the `/macOS-x64/target/pkg` directory. The installer can now be double clicked inside Finder and the installer will run through the necessary steps to install the fEMR software. 
+Check out the READMEs for the [macOS-x64](macOS-x64/README.md) and [windowsInstaller](windowsInstaller/README.md) directories for further details and instructions on how to create and use the installers.
+
+## Other Repositories
+- [AWS](https://github.com/CPSECapstone/self-enrollment-frontend) - AWS code for CI pipline and API
+- [Frontend](https://github.com/CPSECapstone/self-enrollment-frontend) - Frontend React code for self-enrollment webpage
