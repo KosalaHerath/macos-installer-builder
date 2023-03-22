@@ -36,10 +36,10 @@ This will create the .pkg installer under the `/macOS-x64/target/pkg` directory.
 
 Once the installer has finished running through all the steps and installing the necessary software, you can now run the application. Inside your Applications folder there should now be a `fEMR` application. This can be double clicked to boot up the software.
 
-## Other Repositories
+# Other Repositories
 
 - [super-femr](https://github.com/CPSECapstone/super-femr) - The latest version of off-chain femr
-- [AWS](https://github.com/CPSECapstone/self-enrollment-frontend) - AWS code for CI pipeline and API
+- [AWS](https://github.com/henrypigg/fibula-aws) - AWS code for CI pipeline and API
 - [Frontend](https://github.com/CPSECapstone/self-enrollment-frontend) - Frontend React code for self-enrollment webpage
 
 # Uploading a release
