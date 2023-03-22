@@ -8,7 +8,7 @@ Creates installers for the fEMR application for Mac and Windows systems.
 - `windowsInstaller` contains files for creating the Windows installer.
 - `release.py` uploads all generated artifacts to S3 to release to users.
 
-Check out the READMEs for the [macOS-x64](macOS-x64/README.md) and [windowsInstaller](windowsInstaller/README.md) directories for further details and instructions on how to create and use the installers.
+Find instructions to set up the [Mac installer](#macOS-Installer-Builder) and [Windows installer](#Windows-Installer-Builder) below.
 
 ## macOS Installer Builder
 
@@ -37,6 +37,11 @@ This will create the .pkg installer under the `/macOS-x64/target/pkg` directory.
 Once the installer has finished running through all the steps and installing the necessary software, you can now run the application. Inside your Applications folder there should now be a `fEMR` application. This can be double clicked to boot up the software.
 
 ## Windows Installer Builder
+
+Creates a Windows installer for the fEMR application.
+
+### File Structure
+- 
 
 ## Other Repositories
 
