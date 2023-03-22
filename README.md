@@ -6,7 +6,7 @@ Creates installers for the fEMR application for Mac and Windows systems.
 
 - `macOS-x64` contains the files for creating the Mac installer.
 - `windowsInstaller` contains files for creating the Windows installer.
-- `release.py`
+- `release.py` uploads all generated artifacts to S3 to release to users.
 
 Check out the READMEs for the [macOS-x64](macOS-x64/README.md) and [windowsInstaller](windowsInstaller/README.md) directories for further details and instructions on how to create and use the installers.
 
