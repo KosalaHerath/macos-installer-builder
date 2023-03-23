@@ -38,10 +38,14 @@ Once the installer has finished running through all the steps and installing the
 
 ## Windows Installer Builder
 
-Creates a Windows installer for the fEMR application.
+Creates a Windows installer for the fEMR application from advanced installer.
 
 ### File Structure
-- 
+- `./newFemer` contatins all of the files neccessary to build the installer.
+- `./femrInstall-cache` contains all the installer cache information
+
+### Building the installer via advanced installer
+To compile the installer via advanced installer, create a new project with the file location as the windowsInstaller file location. Add all of the files in ./newFemr to the applications folder in the target computer. Add the docker desktop installation to the prerequisite condition for instillation. Add the cache to the project then build the project as a single exe file with the documents included. 
 
 ## Other Repositories
 
