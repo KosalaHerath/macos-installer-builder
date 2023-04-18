@@ -11,7 +11,7 @@ DATE=`date +%Y-%m-%d`
 TIME=`date +%H:%M:%S`
 LOG_PREFIX="[$DATE $TIME]"
 SQL_CONTAINER="mysql:5.7"
-FEMR_CONTAINER="waldenhillegass/super-femr:notarm"
+FEMR_CONTAINER="waldenhillegass/super-femr:latest"
 
 function printSignature() {
   cat "$SCRIPTPATH/utils/ascii_art.txt"
