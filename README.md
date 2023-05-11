@@ -47,3 +47,9 @@ Once the installer has finished running through all the steps and installing the
 - Make sure that an up-to-date femr docker image has been pushed to Dockerhub from the super-femr repository.
 - Make sure your AWS configuration file is configured to write to the release S3 bucket.
 - Run release.py (if necessary, you can install the necessary requirements from the requirements.txt at the top level of this repository)
+
+# Notes for dns
+
+http://192.168.1.1/setup.cgi?todo=debug
+
+need to set DNS server as host server

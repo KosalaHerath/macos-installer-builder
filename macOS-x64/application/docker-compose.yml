@@ -17,7 +17,7 @@ services:
       - db-data:/var/lib/mysql
 
   femr:
-    platform: linux/arm64/v8
+    platform: linux/arm64
     image: waldenhillegass/super-femr:latest
     links:
       - db:mysql
@@ -25,15 +25,31 @@ services:
       - db
     tty: true
     ports:
-      - "9000:9000"
+      - "80:9000"
+      - "433:9443"
     expose:
       - "9000"
+      - "9443"
+
     volumes:
-      - ./femr/conf:/home/femrapp/conf
+      - ./femr/conf:/usr/src/app/conf
     environment:
       DB_URL: "jdbc:mysql://db:3306/femr_db?characterEncoding=UTF-8&useSSL=false"
       DB_USER: "root"
       DB_PASS: "password"
+      PLAY_HTTP_PORT: 1234
+      PLAY_HTTPS_PORT: 9443
+  dns:
+    restart: always
+    image: strm/dnsmasq
+    volumes:
+      - ./dns.conf:/etc/dnsmasq.conf
+    ports:
+      - "53:53/udp"
+    expose:
+      - "53"
+    cap_add:
+      - NET_ADMIN
 
 volumes:
   db-data:
