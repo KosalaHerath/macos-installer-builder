@@ -17,7 +17,7 @@ services:
       - db-data:/var/lib/mysql
 
   femr:
-    platform: linux/arm64
+    platform: linux/arm64/v8
     image: waldenhillegass/super-femr:latest
     links:
       - db:mysql
