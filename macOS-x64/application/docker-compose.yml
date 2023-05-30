@@ -23,6 +23,7 @@ services:
       - db:mysql
     depends_on:
       - db
+    entrypoint: sbt start -Dhttps.port=9443 -Dpidfile.path=/dev/null
     tty: true
     ports:
       - "80:9000"
@@ -34,7 +35,7 @@ services:
     volumes:
       - ./femr/conf:/usr/src/app/conf
     environment:
-      DB_URL: "jdbc:mysql://db:3306/femr_db?characterEncoding=UTF-8&useSSL=false"
+      DB_URL: "jdbc:mysql://db:3306/femr_db?characterEncoding=UTF-8"
       DB_USER: "root"
       DB_PASS: "password"
       PLAY_HTTP_PORT: 1234
