@@ -7,8 +7,8 @@ services:
     environment:
       MYSQL_DATABASE: "femr_db"
       MYSQL_USER: "femr"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_PASSWORD: "__PASSWORD__"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
     ports:
       - "3306:3306"
     expose:
@@ -34,12 +34,6 @@ services:
 
     volumes:
       - ./femr/conf:/usr/src/app/conf
-    environment:
-      DB_URL: "jdbc:mysql://db:3306/femr_db?characterEncoding=UTF-8"
-      DB_USER: "root"
-      DB_PASS: "password"
-      PLAY_HTTP_PORT: 1234
-      PLAY_HTTPS_PORT: 9443
   dns:
     restart: always
     image: strm/dnsmasq
