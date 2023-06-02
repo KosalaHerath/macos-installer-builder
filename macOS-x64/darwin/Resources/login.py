@@ -1,15 +1,19 @@
 #!/usr/bin/python3 
 
 import PySimpleGUI as sg
+import requests
 
 def verify_password(user, password):
+    # r = requests.get("https://vgyc6fujod.execute-api.us-east-1.amazonaws.com/prod/enroll", params={"email": user, "password": password})
     if (user == "admin" and password == "admin"):
         return True
     else:
         print("incorrect login")
+        return False
 
 layout = [  [sg.Text('Username'), sg.Input(key='-USERNAME-')],
             [sg.Text('Password'), sg.Input(key='-PASSWORD-')],
+            [sg.Text(''), sg.Text(size=(50,1), key='-mytext-', text_color='red')],
             [sg.Button('Ok', key='-OK-'), sg.Cancel()],
             [sg.Button('Submit', visible=False, bind_return_key=True)]
         ]
@@ -28,5 +32,7 @@ while True:
 
         if(verify_password(user, password)):
             break
+        else:
+            window['-mytext-'].update("Invalid credentials")
 
 window.close()
