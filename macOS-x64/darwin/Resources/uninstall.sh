@@ -51,23 +51,6 @@ else
   echo "[1/3] [ERROR] Could not delete shortcut links" >&2
 fi
 
-#forget from pkgutil
-pkgutil --forget "org.$PRODUCT.$VERSION" > /dev/null 2>&1
-if [ $? -eq 0 ]
-then
-  echo "[2/3] [DONE] Successfully deleted application informations"
-else
-  echo "[2/3] [ERROR] Could not delete application informations" >&2
-fi
+rm -f /Applications/fEMR
+rm -rf /var/__PRODUCT__/
 
-#remove application source distribution
-[ -e "/Library/${PRODUCT}/${VERSION}" ] && rm -rf "/Library/${PRODUCT}/${VERSION}"
-if [ $? -eq 0 ]
-then
-  echo "[3/3] [DONE] Successfully deleted application"
-else
-  echo "[3/3] [ERROR] Could not delete application" >&2
-fi
-
-echo "Application uninstall process finished"
-exit 0

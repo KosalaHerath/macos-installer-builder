@@ -58,3 +58,7 @@ To compile the installer via advanced installer, create a new project with the f
 - Make sure that an up-to-date femr docker image has been pushed to Dockerhub from the super-femr repository.
 - Make sure your AWS configuration file is configured to write to the release S3 bucket.
 - Run release.py (if necessary, you can install the necessary requirements from the requirements.txt at the top level of this repository)
+
+# Notes for DNS
+
+There is a DNS server as a package in the docker compose. This DNS server is configured to redirect the femr.net to 192.168.1.2 This can be changed by editing the application/dns.conf. Details on how users can configure their routers to use the DNS can be found here: https://docs.google.com/document/d/1opcGO7SUYSOtQPjx1CUQ2PdLrzKxleHNVE4bLMBpUkE/edit?usp=sharing
