@@ -12,6 +12,7 @@ TIME=`date +%H:%M:%S`
 LOG_PREFIX="[$DATE $TIME]"
 SQL_CONTAINER="mysql:5.7"
 FEMR_CONTAINER="waldenhillegass/super-femr:latest"
+DNS_CONTATINER="strm/dnsmasq"
 
 function printSignature() {
   cat "$SCRIPTPATH/utils/ascii_art.txt"
@@ -98,9 +99,12 @@ pull_and_save_docker_images() {
     log_info "Pulling docker images... If this fails, make sure Docker is running."
     docker pull $SQL_CONTAINER
     docker pull $FEMR_CONTAINER
+    docker pull $DNS_CONTATINER
     log_info "Saving docker images.."
     docker save $SQL_CONTAINER > ${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}/mysql:5.7.tar"
     docker save $FEMR_CONTAINER > ${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}/femr.tar"
+    docker save $DNS_CONTATINER > ${TARGET_DIRECTORY}"/darwinpkg/Library/${PRODUCT}/${VERSION}/dnsmasq.tar"
+    log_info "Completed moving docker images"
 }
 
 copyDarwinDirectory(){

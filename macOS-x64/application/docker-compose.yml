@@ -7,8 +7,8 @@ services:
     environment:
       MYSQL_DATABASE: "femr_db"
       MYSQL_USER: "femr"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_PASSWORD: "__PASSWORD__"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
     ports:
       - "3306:3306"
     expose:
@@ -23,17 +23,28 @@ services:
       - db:mysql
     depends_on:
       - db
+    entrypoint: sbt start -Dhttps.port=9443 -Dpidfile.path=/dev/null
     tty: true
     ports:
-      - "9000:9000"
+      - "80:9000"
+      - "433:9443"
     expose:
       - "9000"
+      - "9443"
+
     volumes:
-      - ./femr/conf:/home/femrapp/conf
-    environment:
-      DB_URL: "jdbc:mysql://db:3306/femr_db?characterEncoding=UTF-8&useSSL=false"
-      DB_USER: "root"
-      DB_PASS: "password"
+      - ./femr/conf:/usr/src/app/conf
+  dns:
+    restart: always
+    image: strm/dnsmasq
+    volumes:
+      - ./dns.conf:/etc/dnsmasq.conf
+    ports:
+      - "53:53/udp"
+    expose:
+      - "53"
+    cap_add:
+      - NET_ADMIN
 
 volumes:
   db-data:
