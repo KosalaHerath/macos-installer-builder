@@ -53,4 +53,3 @@ fi
 
 rm -f /Applications/fEMR
 rm -rf /var/__PRODUCT__/
-

@@ -14,7 +14,6 @@ SQL_CONTAINER="mysql:5.7"
 FEMR_CONTAINER="waldenhillegass/super-femr:latest"
 DNS_CONTATINER="strm/dnsmasq"
 
-
 function printSignature() {
   cat "$SCRIPTPATH/utils/ascii_art.txt"
   echo
@@ -207,6 +206,14 @@ function createUninstaller(){
     sed -i '' -e "s/__PRODUCT__/${PRODUCT}/g" "${TARGET_DIRECTORY}/darwinpkg/Library/${PRODUCT}/${VERSION}/uninstall.sh"
 }
 
+function compileLoginScript(){
+    pyinstaller --onefile darwin/Resources/login.py
+    mv dist/login darwin/scripts
+    rm -r dist/
+    rm -r build/
+    rm login.spec
+}
+
 #Pre-requisites
 command -v mvn -v >/dev/null 2>&1 || {
     log_warn "Apache Maven was not found. Please install Maven first."
@@ -220,6 +227,7 @@ command -v ballerina >/dev/null 2>&1 || {
 #Main script
 log_info "Installer generating process started."
 
+compileLoginScript
 copyDarwinDirectory
 copyBuildDirectory
 pull_and_save_docker_images
